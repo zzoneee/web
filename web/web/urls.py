@@ -38,6 +38,7 @@ urlpatterns = [
     #     {'document_root': settings.STATIC_ROOT}, name='static'),
 
     path('downLoad/', include('ex.downLoad.urls')),
+    # re_path('static/(?P<id>\d+)', views.file_down,name = "static"),
     path('', TemplateView.as_view(template_name='index.html')),
 
 ]

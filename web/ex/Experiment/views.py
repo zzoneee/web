@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
-from ex.models import experiment
+from ex.models import experiment, Student, Report
 from django.core import serializers
 
 
@@ -37,15 +37,24 @@ class exListsView(APIView):
                 })
 
             user_id = payload['id']
-            
+            # print(user_id)
             data_list = []
 
             for item in experiment.objects.all():
+                active = 0
+                student = Student.objects.filter(id=user_id).first()
+                group_id = student.group_id
+                report = Report.objects.filter(Q(owner_id=group_id)&Q(experiment_id=item.id)).first()
+                if report:
+                    active = 1
+                    if report.teacher_score != -1:
+                        active = 2
                 data = {'id': item.id,
                         'name': item.name,
                         'url': item.url,
                         'introduction': item.introduction,
                         'introductionUrl': item.introductionUrl,
+                        'active': active,
                 }
                 data_list.append(data)
             

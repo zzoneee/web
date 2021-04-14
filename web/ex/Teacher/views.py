@@ -474,7 +474,7 @@ class reportDetailView(APIView):
         try:
             group_name = request.GET['groupName']
             ex_id = request.GET['reportNum']
-            print(group_name, ex_id)
+            # print(group_name, ex_id)
             group_id = Group.objects.filter(name=group_name).first().id
             data_list = []
             for item in Report.objects.filter(Q(owner_id=group_id) & Q(experiment_id=ex_id)):

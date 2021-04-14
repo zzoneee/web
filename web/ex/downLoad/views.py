@@ -39,7 +39,7 @@ class file_downView(APIView):
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 项目根目录
         length = len(base_dir)
         for i in range(length - 2,0,-1):
-            if base_dir[i] == '\\':
+            if base_dir[i] == '/':
                 base_dir = base_dir[0:i]
                 break
         file_path = os.path.join(base_dir, 'static','report', file_name)  # 下载文件的绝对路径
@@ -111,7 +111,7 @@ class uploadStuMsgView(APIView):
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 项目根目录
         length = len(base_dir)
         for i in range(length - 2,0,-1):
-            if base_dir[i] == '\\':
+            if base_dir[i] == '/':
                 base_dir = base_dir[0:i]
                 break
         file_path = os.path.join(base_dir, 'static','stuMsgXlsx', file_name)  # 下载文件的绝对路径

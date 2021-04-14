@@ -42,13 +42,14 @@ class exListsView(APIView):
 
             for item in experiment.objects.all():
                 active = 0
-                student = Student.objects.filter(id=user_id).first()
-                group_id = student.group_id
-                report = Report.objects.filter(Q(owner_id=group_id)&Q(experiment_id=item.id)).first()
-                if report:
-                    active = 1
-                    if report.teacher_score != -1:
-                        active = 2
+                if type(user_id) == int:
+                    student = Student.objects.filter(id=user_id).first()
+                    group_id = student.group_id
+                    report = Report.objects.filter(Q(owner_id=group_id)&Q(experiment_id=item.id)).first()
+                    if report:
+                        active = 1
+                        if report.teacher_score != -1:
+                            active = 2
                 data = {'id': item.id,
                         'name': item.name,
                         'url': item.url,

@@ -180,7 +180,7 @@ class commentPostView(APIView):
             group_id = request.data.get('group')
             
             if group_id == 'ai':
-                time.sleep(20)
+                time.sleep(5)
 
             tlComment = TLComment(group_id=group_id,tlPost_id=id,message=message)
             tlComment.save()

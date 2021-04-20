@@ -137,6 +137,7 @@
             // 获取实验列表
             getExLists(){
                 get_exLists().then(res => {
+                    // console.log(res.data.err);
                     if(res.data.status == 200){
                         this.exLists = res.data.data;
                         this.numTotal = this.exLists.length;

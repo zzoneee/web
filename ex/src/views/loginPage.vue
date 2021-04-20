@@ -24,7 +24,7 @@
                                 </button>
                             </div>
                             <div class="loginrow">
-                                <el-checkbox class="rememberPsw" v-model="rememberPsw">记住我</el-checkbox>
+                                <!-- <el-checkbox class="rememberPsw" v-model="rememberPsw">记住我</el-checkbox> -->
                             </div>
                             <div class="loginrow">
                                 <button class="loginbtn" type="input" @click="submitForm()">登录</button>
@@ -204,9 +204,24 @@
                 get_getLoginNumber(year, time.getMonth() + 1, time.getDate()).then(res => {
                     // console.log(res.data.err);
                     if(res.data.status == 200){
+                        let maxData = 0;
+                        let color = ['#3c6071', '#557c8e', '#789eb0', '#8fb1c1' ,'#a9c7d5', '#c2d9e4', '#dde8ec'];
+                        for(let i = 6;i >= 0;i--){
+                            if(maxData < res.data.data[i]){
+                                maxData = res.data.data[i]
+                            }
+                        }
                         for(let i = 6;i >= 0;i--){
                             xAxisData.push(timeData[i].month.toString() + "-" + timeData[i].date.toString());
-                            seriesData.push({value: res.data.data[i], itemStyle: {color: '#b3d6e6'}});
+                            let cur_color = color[6];
+                            for(let j = 0;j < 6;j++){
+                                if(res.data.data[i] <= maxData / 7 * (j + 1)){
+                                    cur_color = color[j];
+                                    break;
+                                }
+                            }
+                            seriesData.push({value: res.data.data[i], itemStyle: {color: cur_color}});
+                            // seriesData.push({value: (7 - i) * 10, itemStyle: {color: cur_color}});
                         }
                         // 基于准备好的dom，初始化echarts实例
                         let myChart = this.$echarts.init(document.getElementById('myChart'))
@@ -236,6 +251,9 @@
 </script>
 
 <style scoped>
+    .tmp{
+        color: #c2d9e4;
+    }
     .login{
         margin:0 auto;
         position:fixed;
@@ -256,7 +274,7 @@
         margin-top: 100px;
     }
     .loginCon{
-        margin-top: 50px;
+        margin-top: 63px;
     }
     .loginarea{
         width: 400px;

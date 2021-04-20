@@ -9,7 +9,8 @@
             text-color="#000"
             active-text-color="#4099b4">
             <!-- <span class="titleTL"><i class="el-icon-pie-chart"></i>图灵测试论坛</span> -->
-            <el-menu-item class="forumTop" index="1" :class="{'active_index':activeIndex=='1'}">论坛</el-menu-item>
+            <el-menu-item class="forumTop" index="3" :class="{'active_index':activeIndex=='3'}">实验说明</el-menu-item>
+            <el-menu-item index="1" :class="{'active_index':activeIndex=='1'}">论坛</el-menu-item>
             <el-menu-item index="2" :class="{'active_index':activeIndex=='2'}">投票</el-menu-item>
             
             <el-menu-item index="4" class="userInfo">
@@ -21,6 +22,7 @@
         <div class="info">
 
             <div class="message">
+                <step3 v-if="exNo==3"></step3>
                 <step1 v-if="exNo==1"></step1>
                 <step2 v-if="exNo==2"></step2>
             </div>
@@ -31,6 +33,7 @@
 
 <script>
     import axios from 'axios'
+    const introduction = () => import('./introduction');
     const post = () => import('./post');
     const vote = () => import('./vote');
     export function get_getGroupName(group_id) {
@@ -45,11 +48,12 @@
         components:{
             "step1":post,
             "step2":vote,
+            "step3":introduction,
         },
         data() {
             return {
-                exNo:1,
-                activeIndex: '1',
+                exNo:3,
+                activeIndex: '3',
                 group_id: this.$route.query.group,
                 group_name: '',
             }
@@ -78,6 +82,9 @@
                 }
                 else if(this.activeIndex == "2"){
                     this.exNo = 2;
+                }
+                else if(this.activeIndex == "3"){
+                    this.exNo = 3;
                 }
             },
         }
